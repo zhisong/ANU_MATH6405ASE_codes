@@ -1,3 +1,4 @@
+% Example 2.1
 % clean all the variables
 clear
 close all

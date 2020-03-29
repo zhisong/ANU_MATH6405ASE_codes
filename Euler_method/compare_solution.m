@@ -1,3 +1,4 @@
+% Example 2.1
 % clean all the variables
 clear
 close all
@@ -43,7 +44,7 @@ for j = 1:numel(n)
 
 end
 
-legend('exact','\Delta t=\pi/4','\Delta t=\pi/8', '\Delta t=\pi/16');
+legend('exact','\Delta t=\pi/6','\Delta t=\pi/12', '\Delta t=\pi/24');
 
 hold off
     
