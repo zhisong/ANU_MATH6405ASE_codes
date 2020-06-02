@@ -10,6 +10,13 @@ function [qp, qphis, issuccess, jac] = newton_method(qpguess, k, m, n, abserr, n
 % qphis  - the history of solution
 % issuccess - if successfully find the solution (1) or not (0)
 
+% WE ONLY NEED THE 'o' points for Greene's residue
+% all the o points are located at q=pi
+% we can choose to iterate only on p and keep q=pi fixed (iterate 1
+% variable p)
+% Keep only one equation f_1, drop f_2,
+% the Hessian only have df1/dp_0
+
 % the first element of qpguess is q, second element is p
 
 % put the initial guess as the current guess of q0 and p0
@@ -61,10 +68,10 @@ for i = 1:niter
     H = jac - eye(2);
     
     % the Newton's method
-    qp0_next = qp0 - inv(H) * [f1;f2];
+    qp0_next(2) = qp0(2) - f1 / H(1,2);
     
     % update qp_0 and put it into history
-    qp0 = qp0_next;
+    qp0(2) = qp0_next(2);
     qphis = [qphis qp0];
     
 end

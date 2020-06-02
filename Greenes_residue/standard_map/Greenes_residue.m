@@ -1,10 +1,13 @@
 % Example 6.5
 
+% PLEASE see newton_method.m as it is changed from the one locating fixed
+% points
+
 clear all
 close all
 
 % set the perturbation parameter k
-k = 0.9718;
+k = 0.9716;
 
 % estimate the rotation number for each p starting from q = pi
 [plist, rlist] = get_R_from_poincare_plot_stdmap(k,0,2*pi,100,1000);
@@ -14,9 +17,9 @@ omega = 1/((1 + sqrt(5))/ 2);
 
 % constructing its continued fraction expansion using fibonacci
 
-n = 0:12;
+n = 0:13;
 ri = fibonacci(n);
-n = 1:13;
+n = 1:14;
 si = fibonacci(n);
 
 RG = zeros(size(ri));
@@ -42,6 +45,9 @@ s = si(i);
 % use the newton method to find fixed point with rotation number r/s
 qpguess = [pi; startp];
 [qp, qphis, issuccess, jac] = newton_method(qpguess, k, r, s, abserr, niter);
+if (issuccess == 0)
+    disp(strcat('cannot find fixed point for r/s=',num2str(r),'/',num2str(s)));
+end
 
 % compute Greene's residue and the mean residue
 RG(i) = (2 - trace(jac))  / 4;
@@ -59,6 +65,9 @@ s = si(i);
 [startp] = estimate_start_point(plist, rlist, r/s);
 qpguess = [pi; startp];
 [qp2, qphis, issuccess, jac] = newton_method(qpguess, k, r, s, abserr, niter);
+if (issuccess == 0)
+    disp(strcat('cannot find fixed point for r/s=',num2str(r),'/',num2str(s)));
+end
 
 RG(i) = (2 - trace(jac))  / 4;
 f(i) = nthroot((4 * abs(RG(i))), s);
@@ -69,11 +78,14 @@ for i = istart+2:numel(ri)
     r = ri(i);
     s = si(i);
     % calculate the approximate rotation number between the last two fixed
-    % points found
-    %[plist, rlist] = get_R_from_poincare_plot_stdmap(k,qp(2),qp2(2),100,3000);
+    % points found, the new one must be between the last two fixed points
+    % we first estimate the relationship between p and rotation number by
+    % doing a poincare plot between the last two fixed point at a higher
+    % precision
+    [plist, rlist] = get_R_from_poincare_plot_stdmap(k,qp(2),qp2(2),100,3000);
     % estimate the new starting point
-    %[startp] = estimate_start_point(plist, rlist, r/s);
-    qpguess = qp2;
+    [startp] = estimate_start_point(plist, rlist, r/s);
+    qpguess = [pi,startp];
     [qp3, qphis, issuccess, jac] = newton_method(qpguess, k, r, s, abserr, niter);
     
     if (issuccess == 0)
