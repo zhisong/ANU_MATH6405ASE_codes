@@ -9,6 +9,7 @@ function [qp, qphis, issuccess, jac] = newton_method(qpguess, k, m, n, abserr, n
 % qp     - the solution
 % qphis  - the history of solution
 % issuccess - if successfully find the solution (1) or not (0)
+% jac - jacobian
 
 % the first element of qpguess is q, second element is p
 

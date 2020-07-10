@@ -25,9 +25,8 @@ for i = 1:numel(p1list)
 
     % the initial p1
     p10 = p1list(i);
-    % the initial p2, whatever it is, it does not affect anything
     
-    % set a range of initial conditions [t1,t2,p1,p2]
+    % set a range of initial conditions [q1,p1]
     ic=[2/5*pi;p10];
 
     q1plot(1) = 0;
@@ -38,7 +37,6 @@ for i = 1:numel(p1list)
     for j = 1:nppts
 
         qp = solve_ivp(ic, 2 * pi, k);
-        
         
         % extract the solution
         q1 = qp(1);
