@@ -1,4 +1,4 @@
-# Code Repo for ANU MATH2305/6405 ASE Semester 1 2020 
+# Code Repo for ANU MATH2305/6405 ASE
 
 This is the code repo for Applied Mathematics I Advanced Studies Extension (ASE) _Regular and Chaotic Dynamics_.
 
